@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.weiwei.typee.dao.TypeeMapper">
+	
+	<select id="list" resultType="Map">
+		select a.tid,a.tname,b.zname,b.ms from typee a LEFT JOIN zw b on a.tid=b.tid
+		where zname like '%${zname}%'
+	</select>
+	<select id="getTypee" resultType="Typee">
+		select * from typee
+	</select>
+	<insert id="add">
+		insert into typee set tname=#{tname}
+		<selectKey order="AFTER" keyProperty="tid" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<delete id="del">
+		delete from typee where tid in(${value})
+	</delete>
+	<update id="update">
+		update typee set tname=#{tname}
+	</update>
+</mapper>
